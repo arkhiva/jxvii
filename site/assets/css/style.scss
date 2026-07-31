@@ -1,0 +1,63 @@
+---
+---
+
+/* =========================
+   Global
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #090909;
+    color: #e6e6e6;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* =========================
+   Header
+========================= */
+
+header {
+    padding: 20px 30px;
+    border-bottom: 1px solid #222;
+
+    .brand {
+        font-size: 0.95rem;
+        letter-spacing: 2px;
+        color: #bdbdbd;
+        font-weight: 400;
+    }
+}
+
+/* =========================
+   Content
+========================= */
+
+main {
+    flex: 1;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 50px 25px;
+    line-height: 1.8;
+}
+
+/* =========================
+   Footer
+========================= */
+
+footer {
+    padding: 20px 30px;
+    text-align: center;
+    border-top: 1px solid #222;
+    color: #777;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+}
