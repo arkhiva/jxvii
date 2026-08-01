@@ -1,0 +1,51 @@
+---
+layout: default
+---
+
+<section class="level-header">
+    <h1>Nível {{ page.level }}</h1>
+    <p>{{ page.title }}</p>
+</section>
+
+<section class="level-input">
+    <div class="code-box">
+        <input id="code" type="text" placeholder="Informe o código..." autocomplete="off" spellcheck="false">
+        <button id="submit" type="button">→</button>
+    </div>
+</section>
+
+<section class="level-status"></section>
+
+<section class="level-challenge">
+    {{ content }}
+</section>
+
+{% if page.reward %}
+    <div id="success-popup" class="popup hidden">
+        <div class="popup-window">
+            <h2>{{ page.reward.title }}</h2>
+            <p class="reward-description">{{ page.reward.message }}</p>
+            {% if page.reward.qrcode %}
+                <img class="reward-qrcode" src="{{ page.reward.qrcode | relative_url }}" alt="QR Code da recompensa">
+            {% endif %}
+            {% if page.reward.ticket %}
+                <div class="reward-ticket">
+                    <span>Código do ticket</span>
+                    <code>{{ page.reward.ticket }}</code>
+                </div>
+            {% endif %}
+            {% if page.next_level %}
+                <a class="button" href="{{ page.next_level | relative_url }}">Próximo desafio →</a>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+
+<script>
+    const levelData = {
+        answers: {{ page.answers | default: empty | jsonify }},
+        hints: {{ page.hints | default: empty | jsonify }}
+    };
+</script>
+
+<script src="{{ '/assets/js/level.js' | relative_url }}"></script>

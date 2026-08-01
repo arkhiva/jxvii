@@ -1,7 +1,12 @@
-# bundle exec jekyll serve
+# bundle exec jekyll serve --livereload
 
 # General settings
 site_title: "Desafio JXVII"
+
+# Collections settings
+collections:
+  levels:
+    output: true
 
 # Styles settings
 sass:

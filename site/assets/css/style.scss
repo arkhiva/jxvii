@@ -15,7 +15,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #090909;
+    background: #090909;
     color: #e6e6e6;
     font-family: "Segoe UI", Arial, sans-serif;
 }
@@ -25,19 +25,29 @@ body {
 ========================= */
 
 header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 20px 30px;
     border-bottom: 1px solid #222;
 
     .brand {
-        font-size: 0.95rem;
-        letter-spacing: 2px;
         color: #bdbdbd;
+        font-size: .95rem;
         font-weight: 400;
+        letter-spacing: 2px;
+    }
+
+    .reference {
+        color: #555;
+        font-size: .75rem;
+        letter-spacing: 3px;
+        user-select: none;
     }
 }
 
 /* =========================
-   Content
+   Main
 ========================= */
 
 main {
@@ -50,14 +60,262 @@ main {
 }
 
 /* =========================
+   Level Header
+========================= */
+
+.level-header {
+    margin-bottom: 30px;
+    text-align: center;
+
+    h1 {
+        color: #888;
+        font-size: 1.25rem;
+        font-weight: 100;
+        letter-spacing: 4px;
+    }
+
+    p {
+        color: #aaa;
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
+}
+
+/* =========================
+   Level Input
+========================= */
+
+.level-input {
+    .code-box {
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        background: #999;
+        border: 1px solid #222;
+        border-radius: 10px;
+
+        transition:
+            border-color .25s,
+            box-shadow .25s;
+
+        &:focus-within {
+            border-color: #666;
+            box-shadow: 0 0 0 3px rgba(255,255,255,.05);
+        }
+    }
+
+    input {
+        flex: 1;
+        padding: 16px 18px;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #222;
+        font-size: 1rem;
+        letter-spacing: 1px;
+
+        &::placeholder {
+            color: #666;
+            letter-spacing: 1px;
+        }
+    }
+
+    button {
+        width: 58px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #999;
+        border: none;
+        color: #222;
+        font-size: 1.3rem;
+
+        cursor: pointer;
+
+        transition:
+            background-color .2s,
+            color .2s,
+            transform .2s;
+
+        &:hover {
+            background: #6f008e;
+            color: white;
+        }
+
+        &:active {
+            transform: scale(.96);
+        }
+    }
+}
+
+/* =========================
+   Level Status
+========================= */
+
+.level-status {
+    min-height: 28px;
+    padding: 0 10px;
+    font-size: .8rem;
+
+    &.error {
+        color: #ff6464;
+    }
+
+    &.warning {
+        color: #ffc857;
+    }
+}
+
+/* =========================
+   Challenge
+========================= */
+
+.level-challenge {
+    padding: 30px 10px;
+    border-top: 1px solid #222;
+    color: #888;
+    font-size: 0.8rem;
+}
+
+.secret-code {
+    color: #1a1a1a;
+}
+
+.secret-area {
+    margin-top: 120px;
+}
+
+.textcode {
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    font-weight: 300;
+}
+
+/* =========================
+   Popup
+========================= */
+
+.popup {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,.75);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+
+    &.hidden {
+        display: none;
+    }
+}
+
+.popup-window {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px;
+    padding: 35px;
+    background: #222;
+    border-radius: 15px;
+    text-align: center;
+
+    h2 {
+        margin-bottom: 12px;
+        color: #ddd;
+        font-size: 1.2rem;
+        font-weight: 400;
+        letter-spacing: 2px;
+    }
+}
+
+/* ---------- Popup Description ---------- */
+
+.reward-description {
+    margin-bottom: 30px;
+    color: #888;
+    line-height: 1.8;
+    font-size: .8rem;
+}
+
+/* ---------- QR Code ---------- */
+
+.reward-qrcode {
+    display: block;
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 25px;
+    background: white;
+    border-radius: 10px;
+    object-fit: contain;
+}
+
+/* ---------- Ticket ---------- */
+
+.reward-ticket {
+    margin-bottom: 30px;
+    padding: 18px;
+    background: #181818;
+    border: 1px solid #333;
+    border-radius: 10px;
+
+    .label {
+        display: block;
+        margin-bottom: 8px;
+        color: #777;
+        font-size: .75rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    code {
+        display: block;
+        color: #ddd;
+        font-size: 1rem;
+        letter-spacing: 2px;
+        font-family:
+            Consolas,
+            "Courier New",
+            monospace;
+    }
+}
+
+/* ---------- Popup Button ---------- */
+
+.popup-window {
+    .button {
+        display: inline-block;
+        padding: 12px 24px;
+        background: #280056;
+        border: 1px solid #333;
+        border-radius: 6px;
+        color: #ddd;
+        text-decoration: none;
+
+        cursor: pointer;
+
+        transition:
+            background-color .2s,
+            border-color .2s,
+            color .2s;
+
+        &:hover {
+            background: #14002a;
+            border-color: #444;
+            color: white;
+        }
+    }
+}
+
+/* =========================
    Footer
 ========================= */
 
 footer {
     padding: 20px 30px;
-    text-align: center;
     border-top: 1px solid #222;
+    text-align: center;
     color: #777;
-    font-size: 0.7rem;
+    font-size: .7rem;
     letter-spacing: 1px;
 }

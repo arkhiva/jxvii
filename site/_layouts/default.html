@@ -14,6 +14,11 @@ layout: compress
     <body>
         <header>
             <span class="brand">{{site.site_title}}</span>
+            {% if page.reference %}
+                <span class="reference">
+                    #{{ page.reference }}
+                </span>
+            {% endif %}
         </header>
         
         <main>
