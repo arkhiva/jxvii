@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cells="clr-namespace:arkanbank.Controls.Cells"
+    x:Class="arkanbank.Views.TransactionsPage"
+    Title="Histórico">
+
+    <Grid>
+
+        <CollectionView
+            ItemsSource="{Binding Transactions}"
+            IsGrouped="True"
+            VerticalScrollBarVisibility="Never">
+
+            <!-- ===================================================== -->
+            <!-- Cabeçalho do Grupo -->
+            <!-- ===================================================== -->
+
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <Label
+                        Margin="20,20,20,5"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="{Binding Header}"
+                        TextColor="{AppThemeBinding
+                            Light={StaticResource Black},
+                            Dark={StaticResource White}}" />
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+
+            <!-- ===================================================== -->
+            <!-- Itens -->
+            <!-- ===================================================== -->
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <cells:ExtractCell
+                        Type="{Binding Type}"
+                        Title="{Binding Title}"
+                        Date="{Binding Date}"
+                        Amount="{Binding Amount}" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

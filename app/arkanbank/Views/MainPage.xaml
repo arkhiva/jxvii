@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="arkanbank.Views.MainPage"
+    Shell.NavBarIsVisible="False">
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+
+        <VerticalStackLayout Padding="20">
+
+            <!-- ===================================================== -->
+            <!-- Header -->
+            <!-- ===================================================== -->
+
+            <VerticalStackLayout
+                Margin="5,10,5,20"
+                Spacing="2">
+
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="30"
+                    Text="ARKAN Bank"
+                    TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+
+                <Label FontSize="16">
+
+                    <Label.FormattedText>
+
+                        <FormattedString>
+
+                            <Span
+                                Text="Bem-vinda, "
+                                TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+
+                            <Span
+                                Text="Jheynne A Mais Mais"
+                                FontAttributes="Bold"
+                                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </VerticalStackLayout>
+
+            <!-- ===================================================== -->
+            <!-- Card Saldo -->
+            <!-- ===================================================== -->
+
+            <Border
+                Margin="0,0,0,25"
+                Padding="25"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
+                Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray900}}"
+                StrokeShape="RoundRectangle 22">
+
+                <VerticalStackLayout>
+
+                    <Label
+                        FontSize="15"
+                        Text="Saldo disponível"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
+
+                    <Grid
+                        ColumnDefinitions="*,Auto"
+                        VerticalOptions="Center">
+
+                        <Label
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="40"
+                            VerticalTextAlignment="Center"
+                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span
+                                        Text="N$ "
+                                        FontSize="40" />
+                                    <Span
+                                        x:Name="BalanceLabel"
+                                        FontSize="40" />
+                                    <Span
+                                        x:Name="BalanceCentLabel"
+                                        FontSize="28" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Button
+                            x:Name="VisibilityButton"
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            BackgroundColor="Transparent"
+                            Clicked="OnVisibility_Clicked"
+                            FontFamily="IconsSolid"
+                            FontSize="18"
+                            Text="&#xf06e;"
+                            TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
+                    </Grid>
+
+                    <Label
+                        FontAttributes="Italic"
+                        FontSize="14"
+                        Text="Nexos (N$)"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ===================================================== -->
+            <!-- Botões -->
+            <!-- ===================================================== -->
+
+            <Label
+                Margin="0,0,0,10"
+                Text="Ações Rápidas" />
+
+            <Grid
+                ColumnDefinitions="*,*"
+                RowDefinitions="Auto,Auto"
+                ColumnSpacing="15"
+                RowSpacing="15">
+
+                <!-- Escanear -->
+
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Padding="20"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
+                    Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray900}}"
+                    StrokeShape="RoundRectangle 20">
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ScanTapped" />
+                    </Border.GestureRecognizers>
+
+                    <VerticalStackLayout
+                        HorizontalOptions="Center"
+                        Spacing="10">
+
+                        <Label
+                            FontFamily="IconsSolid"
+                            FontSize="28"
+                            HorizontalTextAlignment="Center"
+                            Text="&#xf029;" />
+
+                        <Label
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text="Escanear" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Extrato -->
+
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Padding="20"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
+                    Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray900}}"
+                    StrokeShape="RoundRectangle 20">
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ExtractTapped" />
+                    </Border.GestureRecognizers>
+
+                    <VerticalStackLayout
+                        HorizontalOptions="Center"
+                        Spacing="10">
+
+                        <Label
+                            FontFamily="IconsSolid"
+                            FontSize="28"
+                            HorizontalTextAlignment="Center"
+                            Text="&#xf15c;" />
+
+                        <Label
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text="Histórico" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Loja -->
+
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Padding="20"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
+                    Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray900}}"
+                    StrokeShape="RoundRectangle 20">
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="StoreTapped" />
+                    </Border.GestureRecognizers>
+
+                    <VerticalStackLayout
+                        HorizontalOptions="Center"
+                        Spacing="10">
+
+                        <Label
+                            FontFamily="IconsSolid"
+                            FontSize="28"
+                            HorizontalTextAlignment="Center"
+                            Text="&#xf07a;" />
+
+                        <Label
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text="Loja" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Inventário -->
+
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Padding="20"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
+                    Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray900}}"
+                    StrokeShape="RoundRectangle 20">
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="InventoryTapped" />
+                    </Border.GestureRecognizers>
+
+                    <VerticalStackLayout
+                        HorizontalOptions="Center"
+                        Spacing="10">
+
+                        <Label
+                            FontFamily="IconsSolid"
+                            FontSize="28"
+                            HorizontalTextAlignment="Center"
+                            Text="&#xf187;" />
+
+                        <Label
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text="Inventário" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- ===================================================== -->
+            <!-- Rodapé -->
+            <!-- ===================================================== -->
+
+            <VerticalStackLayout
+                Margin="0,35,0,15"
+                HorizontalOptions="Center"
+                Spacing="2">
+
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="12"
+                    HorizontalTextAlignment="Center"
+                    Margin="0,70,0,0"
+                    Text="ARKAN Bank ®"
+                    TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+
+                <Label
+                    FontSize="11"
+                    HorizontalTextAlignment="Center"
+                    Text="© 2026 kastney. Todos os direitos reservados."
+                    TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray500}}" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

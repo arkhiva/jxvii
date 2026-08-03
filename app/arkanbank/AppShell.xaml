@@ -3,11 +3,10 @@
     x:Class="arkanbank.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:arkanbank"
-    Title="arkanbank">
+    xmlns:local="clr-namespace:arkanbank.Views">
 
     <ShellContent
-        Title="Home"
+        Title="Início"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
