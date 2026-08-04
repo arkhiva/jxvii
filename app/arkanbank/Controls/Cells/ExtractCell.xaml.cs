@@ -88,29 +88,36 @@ public partial class ExtractCell : ContentView {
 
         // Ícone
         switch(Type) {
-            case TransactionType.Reward:
-            icon.Text = "\uf005";   // Star
-            break;
-
-            case TransactionType.Purchase:
-            icon.Text = "\uf07a";   // Shopping Cart
-            break;
-
-            case TransactionType.Gift:
-            icon.Text = "\uf06b";   // Gift
-            break;
-
-            case TransactionType.Secret:
-            icon.Text = "\uf023";   // Lock
-            break;
-
-            case TransactionType.Bonus:
-            icon.Text = "\uf51e";   // Coins
-            break;
-
-            default:
-            icon.Text = "\uf555";   // Bank
-            break;
+            case TransactionType.Reward: {
+                // Medalha.
+                icon.Text = "\uf5a2";
+                break;
+            }
+            case TransactionType.Purchase: {
+                // Carrinho de compras.
+                icon.Text = "\uf07a";
+                break;
+            }
+            case TransactionType.Gift: {
+                // Presente.
+                icon.Text = "\uf06b";
+                break;
+            }
+            case TransactionType.Secret: {
+                // Cadeado.
+                icon.Text = "\uf023";
+                break;
+            }
+            case TransactionType.Bonus: {
+                // Moedas.
+                icon.Text = "\uf51e";
+                break;
+            }
+            default: {
+                // Carteira.
+                icon.Text = "\uf555";
+                break;
+            }
         }
     }
 

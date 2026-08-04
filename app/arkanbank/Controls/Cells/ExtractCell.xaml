@@ -35,7 +35,7 @@
                 Grid.Row="0"
                 Grid.Column="1"
                 FontAttributes="Bold"
-                FontSize="17"
+                FontSize="15"
                 TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
 
             <!-- Data -->
@@ -54,7 +54,7 @@
                 Grid.RowSpan="2"
                 Grid.Column="2"
                 FontAttributes="Bold"
-                FontSize="22"
+                FontSize="18"
                 HorizontalTextAlignment="End"
                 VerticalOptions="Center" />
         </Grid>

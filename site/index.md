@@ -28,7 +28,7 @@ reward:
     Mas isso foi apenas o começo.<br>
     Ah, e sobre esse QR Code... ignora ele por enquanto hahaha.
     Confia, uma hora vai fazer sentido.
-  qrcode: "/assets/rewards/01.png"
+  qrcode: "/assets/rewards/41821.jpeg"
   ticket: "JXVII-4D9A-81BC"
 
 next_level: "/zgwElFD879J4"

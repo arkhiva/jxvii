@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:editors="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+    x:Class="arkanbank.Controls.Styles.TextEditStyle">
+
+    <!-- Estilo global para o controle TextEdit do DevExpress. -->
+    <Style TargetType="editors:TextEdit">
+        <!-- Define o modo de exibição da caixa de texto (preenchida ao invés de borda simples). -->
+        <Setter Property="BoxMode" Value="Filled" />
+        <!-- Define o raio da borda, deixando os cantos arredondados. -->
+        <Setter Property="CornerRadius" Value="10" />
+        <!-- Define o tamanho da fonte do texto exibido abaixo do campo (ex: mensagens de validação). -->
+        <Setter Property="BottomTextFontSize" Value="Micro" />
+        <!-- Ícone exibido para limpar o conteúdo do campo. -->
+        <Setter Property="ClearIcon" Value="{FontImageSource FontFamily=IconsRegular, Size=22, Glyph=&#xf00d;}" />
+        <!-- Ícone exibido quando ocorre um erro de validação. -->
+        <Setter Property="ErrorIcon" Value="{FontImageSource FontFamily=IconsSolid, Size=18, Glyph=&#xf06a;}" />
+        <!-- Define a cor de fundo do campo de entrada, adaptando-se ao tema claro ou escuro. -->
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}" />
+        <!-- Cor da borda quando o campo recebe foco. -->
+        <Setter Property="FocusedBorderColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+        <!-- Cor do rótulo associado ao campo quando está em foco. -->
+        <Setter Property="FocusedLabelColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+        <!-- Cor do placeholder (texto de dica exibido quando o campo está vazio). -->
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+        <!-- Cor do texto de erro exibido abaixo do campo. -->
+        <Setter Property="ErrorColor" Value="{AppThemeBinding Light={StaticResource Error}, Dark={StaticResource ErrorDark}}" />
+        <!-- Cor do cursor de texto dentro do campo. -->
+        <Setter Property="CursorColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+        <!-- Cor do ícone inicial (quando configurado no campo). -->
+        <Setter Property="StartIconColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
+        <!-- Cor do ícone de limpar. -->
+        <Setter Property="ClearIconColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
+    </Style>
+</ResourceDictionary>

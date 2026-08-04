@@ -104,4 +104,13 @@ public class WalletService {
 
         Save();
     }
+
+    public bool IsRewardRedeemed(string ticket) {
+        return Wallet.RedeemedRewards.Contains(ticket);
+    }
+
+    public void RegisterReward(string ticket) {
+        Wallet.RedeemedRewards.Add(ticket);
+        Save();
+    }
 }

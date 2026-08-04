@@ -7,10 +7,8 @@ namespace arkanbank {
         public AppShell() {
             InitializeComponent();
 
-            Routing.RegisterRoute(
-                nameof(TransactionsPage),
-                typeof(TransactionsPage)
-            );
+            Routing.RegisterRoute(nameof(TransactionsPage), typeof(TransactionsPage));
+            Routing.RegisterRoute(nameof(ScanPage), typeof(ScanPage));
         }
     }
 }

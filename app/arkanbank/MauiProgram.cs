@@ -1,5 +1,8 @@
 ﻿using arkanbank.Services;
+using CommunityToolkit.Maui;
+using DevExpress.Maui;
 using Microsoft.Extensions.Logging;
+using ZXing.Net.Maui.Controls;
 
 namespace arkanbank;
 
@@ -9,6 +12,22 @@ public static class MauiProgram {
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+
+        #region Toolkits
+
+            // Community Toolkit.
+            .UseMauiCommunityToolkit()
+
+            // DevExpress Toolkit.
+            .UseDevExpress(useLocalization: false)
+            .UseDevExpressCollectionView()
+            .UseDevExpressControls()
+            .UseDevExpressEditors()
+
+            // ZXing.Net.Maui Toolkit.
+            .UseBarcodeReader()
+
+        #endregion Toolkits
 
         #region Fonts
 

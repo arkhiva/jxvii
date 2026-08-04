@@ -1,4 +1,5 @@
 ﻿using arkanbank.Models;
+using arkanbank.Security;
 
 namespace arkanbank.Views;
 
@@ -10,33 +11,22 @@ public partial class MainPage : ContentPage {
 
     public MainPage() {
         InitializeComponent();
-
         LoadBalanceVisibility();
     }
 
     protected override void OnAppearing() {
         base.OnAppearing();
-
         UpdateBalanceDisplay();
     }
 
     private void LoadBalanceVisibility() {
-        balanceVisible = Preferences.Get(
-            BalanceVisibilityKey,
-            true
-        );
-
+        balanceVisible = Preferences.Get(BalanceVisibilityKey, true);
         UpdateBalanceDisplay();
     }
 
     private void OnVisibility_Clicked(object sender, EventArgs e) {
         balanceVisible = !balanceVisible;
-
-        Preferences.Set(
-            BalanceVisibilityKey,
-            balanceVisible
-        );
-
+        Preferences.Set(BalanceVisibilityKey, balanceVisible);
         UpdateBalanceDisplay();
     }
 
@@ -44,52 +34,32 @@ public partial class MainPage : ContentPage {
         if(!balanceVisible) {
             BalanceLabel.Text = "••••••••";
             BalanceCentLabel.Text = "";
-
             VisibilityButton.Text = "\uf070";
-
             return;
         }
 
-        BalanceLabel.Text =
-            $"{App.Wallet.Wallet.Balance}";
-
-        BalanceCentLabel.Text =
-            ",00";
-
-        VisibilityButton.Text =
-            "\uf06e";
+        BalanceLabel.Text = $"{App.Wallet.Wallet.Balance}";
+        BalanceCentLabel.Text = ",00";
+        VisibilityButton.Text = "\uf06e";
     }
 
-    private void ScanTapped(object sender, TappedEventArgs e) {
-        App.Wallet.AddMoney(
-            20,
-            "QR Code",
-            TransactionType.Reward
-        );
-
-        UpdateBalanceDisplay();
+    private async void ScanTapped(object sender, TappedEventArgs e) {
+        var encrypt = Cryptography.Encrypt(new QrCodeItem { Type = TransactionType.Reward, Value = "JXVII-1H5X-93LV" });
+        if(isRunning) { return; }
+        isRunning = true;
+        await Shell.Current.GoToAsync(nameof(ScanPage));
+        isRunning = false;
     }
 
     private async void ExtractTapped(object sender, TappedEventArgs e) {
-        if(isRunning)
-            return;
-
+        if(isRunning) { return; }
         isRunning = true;
-
-        await Shell.Current.GoToAsync(
-            nameof(TransactionsPage)
-        );
-
+        await Shell.Current.GoToAsync(nameof(TransactionsPage));
         isRunning = false;
     }
 
     private void StoreTapped(object sender, TappedEventArgs e) {
-        App.Wallet.RemoveMoney(
-            5,
-            "Compra da dica",
-            TransactionType.Purchase
-        );
-
+        App.Wallet.RemoveMoney(5, "Compra da dica", TransactionType.Purchase);
         UpdateBalanceDisplay();
     }
 

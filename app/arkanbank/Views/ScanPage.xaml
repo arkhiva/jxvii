@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:editors="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+    xmlns:styles="clr-namespace:arkanbank.Controls.Styles"
+    xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+    x:Class="arkanbank.Views.ScanPage"
+    Title="Escanear">
+
+    <ContentPage.Resources>
+        <styles:TextEditStyle />
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- ===================================================== -->
+        <!-- Popup de Recompensa -->
+        <!-- ===================================================== -->
+
+        <Grid
+            x:Name="RewardPopup"
+            Grid.RowSpan="2"
+            IsVisible="False"
+            BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}"
+            ZIndex="100">
+
+            <Border
+                WidthRequest="320"
+                Padding="24"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray900}}"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 24">
+
+                <VerticalStackLayout Spacing="18">
+
+                    <!-- Ícone -->
+
+                    <Border
+                        WidthRequest="80"
+                        HeightRequest="80"
+                        HorizontalOptions="Center"
+                        BackgroundColor="{StaticResource Primary}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 40">
+
+                        <Label
+                            FontFamily="IconsSolid"
+                            FontSize="40"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            Text="&#xf3d1;"
+                            TextColor="White" />
+                    </Border>
+
+                    <!-- Título -->
+
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        FontAttributes="Bold"
+                        FontSize="24"
+                        Text="Recompensa Resgatada!" />
+
+                    <!-- Descrição -->
+
+                    <Label
+                        x:Name="RewardDescription"
+                        HorizontalTextAlignment="Center"
+                        FontSize="15"
+                        Text="Você recebeu N$10." />
+
+                    <!-- Botão -->
+
+                    <Button
+                        HeightRequest="52"
+                        Text="Continuar"
+                        Clicked="RewardPopupButton_Clicked" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- ===================================================== -->
+        <!-- Seletor -->
+        <!-- ===================================================== -->
+
+        <Grid
+                Margin="20,20,20,10"
+                ColumnDefinitions="*,*"
+                HeightRequest="52">
+
+            <Border
+                    x:Name="QrTab"
+                    Grid.Column="0"
+                    Margin="0,0,4,0"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 14">
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="QrTabTapped" />
+                </Border.GestureRecognizers>
+
+                <Label
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="&#xf029;  " FontFamily="IconsSolid" />
+                            <Span Text="QR Code" FontAttributes="Bold" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Border>
+
+            <Border
+                    x:Name="CodeTab"
+                    Grid.Column="1"
+                    Margin="4,0,0,0"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 14">
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CodeTabTapped" />
+                </Border.GestureRecognizers>
+
+                <Label
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="&#xf02b;  " FontFamily="IconsSolid" />
+                            <Span Text="Ticket" FontAttributes="Bold" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Border>
+        </Grid>
+
+        <!-- ===================================================== -->
+        <!-- Conteúdo -->
+        <!-- ===================================================== -->
+
+        <Grid Grid.Row="1">
+
+            <!-- ================================================= -->
+            <!-- QR -->
+            <!-- ================================================= -->
+
+            <VerticalStackLayout
+                    x:Name="QrLayout"
+                    Padding="20"
+                    Spacing="20">
+
+                <Label
+                        FontAttributes="Bold"
+                        FontSize="22"
+                        Text="Aponte para o QR Code" />
+
+                <Label
+                        HorizontalTextAlignment="Justify"
+                        FontSize="Micro"
+                        Text="Suas conquistas geram recompensas. Escaneie os QR Codes liberados ao final dos níveis para resgatar seus ganhos no ARKAN Bank" />
+
+                <Border
+                        HeightRequest="350"
+                        StrokeShape="RoundRectangle 20"
+                        Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray900}}">
+
+                    <Grid>
+
+                        <!-- Camera -->
+
+                        <zxing:CameraBarcodeReaderView
+                                x:Name="CameraView"
+                                IsDetecting="True"
+                                BarcodesDetected="CameraView_BarcodesDetected" />
+
+                        <!-- Overlay -->
+
+                        <Grid InputTransparent="True">
+
+                            <!-- Moldura escura -->
+
+                            <Border
+                                    BackgroundColor="#15000000"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 20" />
+
+                            <!-- Linha do scanner -->
+
+                            <Border
+                                    HeightRequest="2"
+                                    Margin="35,0"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                                    StrokeThickness="0"
+                                    Opacity="0.95">
+
+                                <Border.Shadow>
+                                    <Shadow
+                                            Brush="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                                            Radius="18"
+                                            Opacity="0.9" />
+                                </Border.Shadow>
+                            </Border>
+
+                            <!-- Canto superior esquerdo -->
+
+                            <Grid
+                                    WidthRequest="40"
+                                    HeightRequest="40"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="Start"
+                                    Margin="24">
+
+                                <BoxView
+                                        WidthRequest="34"
+                                        HeightRequest="5"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Start"
+                                        Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+
+                                <BoxView
+                                        WidthRequest="5"
+                                        HeightRequest="34"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Start"
+                                        Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                            </Grid>
+
+                            <!-- Canto superior direito -->
+
+                            <Grid
+                                    WidthRequest="40"
+                                    HeightRequest="40"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Start"
+                                    Margin="24">
+
+                                <BoxView
+                                        WidthRequest="34"
+                                        HeightRequest="5"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Start"
+                                        Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+
+                                <BoxView
+                                        WidthRequest="5"
+                                        HeightRequest="34"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Start"
+                                        Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                            </Grid>
+
+                            <!-- Canto inferior esquerdo -->
+
+                            <Grid
+                                    WidthRequest="40"
+                                    HeightRequest="40"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="End"
+                                    Margin="24">
+
+                                <BoxView
+                                        WidthRequest="34"
+                                        HeightRequest="5"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="End"
+                                        Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+
+                                <BoxView
+                                        WidthRequest="5"
+                                        HeightRequest="34"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="End"
+                                        Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                            </Grid>
+
+                            <!-- Canto inferior direito -->
+
+                            <Grid
+                                    WidthRequest="40"
+                                    HeightRequest="40"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="End"
+                                    Margin="24">
+
+                                <BoxView
+                                        WidthRequest="34"
+                                        HeightRequest="5"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="End"
+                                        Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+
+                                <BoxView
+                                        WidthRequest="5"
+                                        HeightRequest="34"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="End"
+                                        Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- ================================================= -->
+            <!-- Código -->
+            <!-- ================================================= -->
+
+            <VerticalStackLayout
+                    x:Name="CodeLayout"
+                    IsVisible="False"
+                    Padding="20"
+                    Spacing="20">
+
+                <Label
+                        FontAttributes="Bold"
+                        FontSize="22"
+                        Text="Digite seu Ticket" />
+
+                <Label
+                        HorizontalTextAlignment="Justify"
+                        FontSize="Micro"
+                        Text="Suas conquistas geram recompensas. Digite os Tíckets liberados ao final dos níveis para resgatar seus ganhos no ARKAN Bank" />
+
+                <editors:TextEdit
+                        x:Name="CodeEntry"
+                        Text="{Binding Ticket}"
+                        HasError="False"
+                        LabelText="Seu Ticket"
+                        StartIcon="{FontImageSource FontFamily=IconsSolid, Size=22, Glyph=&#xf02b;}"
+                        Keyboard="Text"
+                        TextFontFamily="monospace"
+                        PlaceholderText="Ex.: XXXXX-XXXX-XXXX"
+                        Mask="LLLLL-CCCC-CCCC"
+                        MaskPlaceholderChar="X"
+                        MaxCharacterCount="13"
+                        ReturnType="Done"
+                        TextChanged="CodeEntry_TextChanged" />
+
+                <Button
+                    HeightRequest="55"
+                    FontAttributes="Bold"
+                    Text="Resgatar"
+                    Clicked="RedeemButton_Clicked"/>
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>
