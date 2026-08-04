@@ -346,7 +346,7 @@
                     HeightRequest="55"
                     FontAttributes="Bold"
                     Text="Resgatar"
-                    Clicked="RedeemButton_Clicked"/>
+                    Clicked="RedeemButton_Clicked" />
             </VerticalStackLayout>
         </Grid>
     </Grid>
