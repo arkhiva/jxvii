@@ -9,6 +9,8 @@ namespace arkanbank {
 
             Routing.RegisterRoute(nameof(TransactionsPage), typeof(TransactionsPage));
             Routing.RegisterRoute(nameof(ScanPage), typeof(ScanPage));
+            Routing.RegisterRoute(nameof(StorePage), typeof(StorePage));
+            Routing.RegisterRoute(nameof(InventoryPage), typeof(InventoryPage));
         }
     }
 }

@@ -211,8 +211,7 @@ public partial class ScanPage : ContentPage {
                 return;
             }
 
-            ticket = ticket.Insert(5, "-")
-                           .Insert(10, "-");
+            ticket = ticket.Insert(5, "-").Insert(10, "-");
 
             CodeEntry.Unfocus();
 
@@ -225,8 +224,7 @@ public partial class ScanPage : ContentPage {
                         Value = ticket
                     });
 
-            await RedeemQrCode(
-                encryptedTicket);
+            await RedeemQrCode(encryptedTicket);
         } finally {
             if(!RewardPopup.IsVisible)
                 scanned = false;

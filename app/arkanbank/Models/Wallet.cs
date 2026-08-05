@@ -5,7 +5,7 @@ public class Wallet {
 
     public List<Transaction> Transactions { get; set; } = [];
 
-    public List<InventoryItem> Inventory { get; set; } = [];
+    public HashSet<string> Inventory { get; set; } = [];
 
     public HashSet<string> RedeemedRewards { get; set; } = [];
 }

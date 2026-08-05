@@ -1,7 +1,4 @@
-﻿using arkanbank.Models;
-using arkanbank.Security;
-
-namespace arkanbank.Views;
+﻿namespace arkanbank.Views;
 
 public partial class MainPage : ContentPage {
     private bool balanceVisible;
@@ -16,6 +13,9 @@ public partial class MainPage : ContentPage {
 
     protected override void OnAppearing() {
         base.OnAppearing();
+
+        balanceVisible = Preferences.Get(BalanceVisibilityKey, true);
+
         UpdateBalanceDisplay();
     }
 
@@ -44,7 +44,6 @@ public partial class MainPage : ContentPage {
     }
 
     private async void ScanTapped(object sender, TappedEventArgs e) {
-        var encrypt = Cryptography.Encrypt(new QrCodeItem { Type = TransactionType.Reward, Value = "JXVII-1H5X-93LV" });
         if(isRunning) { return; }
         isRunning = true;
         await Shell.Current.GoToAsync(nameof(ScanPage));
@@ -58,15 +57,17 @@ public partial class MainPage : ContentPage {
         isRunning = false;
     }
 
-    private void StoreTapped(object sender, TappedEventArgs e) {
-        App.Wallet.RemoveMoney(5, "Compra da dica", TransactionType.Purchase);
-        UpdateBalanceDisplay();
+    private async void StoreTapped(object sender, TappedEventArgs e) {
+        if(isRunning) { return; }
+        isRunning = true;
+        await Shell.Current.GoToAsync(nameof(StorePage));
+        isRunning = false;
     }
 
-    private void InventoryTapped(object sender, TappedEventArgs e) {
-        // Temporário apenas para testes
-        App.Wallet.ClearData();
-
-        UpdateBalanceDisplay();
+    private async void InventoryTapped(object sender, TappedEventArgs e) {
+        if(isRunning) { return; }
+        isRunning = true;
+        await Shell.Current.GoToAsync(nameof(InventoryPage));
+        isRunning = false;
     }
 }

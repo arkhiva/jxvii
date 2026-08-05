@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using arkanbank.Data;
 using arkanbank.Models;
 
 namespace arkanbank.Services;
@@ -11,8 +12,7 @@ public class WalletService {
     public WalletService() {
         filePath = Path.Combine(
             FileSystem.AppDataDirectory,
-            "wallet.json"
-        );
+            "wallet.json");
 
         Load();
     }
@@ -20,13 +20,10 @@ public class WalletService {
     public void Load() {
         if(File.Exists(filePath)) {
             string json = File.ReadAllText(filePath);
-
-            Wallet =
-                JsonSerializer.Deserialize<Wallet>(json)
-                ?? new Wallet();
+            Wallet = JsonSerializer.Deserialize<Wallet>(json) ?? new Wallet();
+            //ClearData();
         } else {
             Wallet = new Wallet();
-
             Save();
         }
     }
@@ -41,9 +38,10 @@ public class WalletService {
 
         File.WriteAllText(
             filePath,
-            json
-        );
+            json);
     }
+
+    #region Money
 
     public void AddMoney(
         int amount,
@@ -55,11 +53,8 @@ public class WalletService {
             0,
             new Transaction {
                 Title = title,
-
                 Amount = amount,
-
                 Date = DateTime.Now,
-
                 Type = type
             });
 
@@ -76,34 +71,56 @@ public class WalletService {
             0,
             new Transaction {
                 Title = title,
-
                 Amount = -amount,
-
                 Date = DateTime.Now,
-
                 Type = type
             });
 
         Save();
     }
 
-    public void AddInventoryItem(string name) {
-        Wallet.Inventory.Add(
+    #endregion Money
 
-            new InventoryItem {
-                Name = name,
+    #region Inventory
 
-                PurchaseDate = DateTime.Now
-            });
+    public IReadOnlyCollection<string> Inventory
+        => Wallet.Inventory;
+
+    public void AddInventoryItem(string id) {
+        Wallet.Inventory.Add(id);
+
+        Save();
+    }
+
+    public bool HasInventoryItem(string id) {
+        return Wallet.Inventory.Contains(id);
+    }
+
+    public InventoryItem? GetInventoryItem(string id) {
+        if(!Wallet.Inventory.Contains(id))
+            return null;
+
+        return InventoryTable.Items.TryGetValue(
+            id,
+            out InventoryItem? item)
+                ? item
+                : null;
+    }
+
+    public void RemoveInventoryItem(string id) {
+        if(Wallet.Inventory.Remove(id))
+            Save();
+    }
+
+    public void ClearInventory() {
+        Wallet.Inventory.Clear();
 
         Save();
     }
 
-    public void ClearData() {
-        Wallet = new Wallet();
+    #endregion Inventory
 
-        Save();
-    }
+    #region Rewards
 
     public bool IsRewardRedeemed(string ticket) {
         return Wallet.RedeemedRewards.Contains(ticket);
@@ -111,6 +128,19 @@ public class WalletService {
 
     public void RegisterReward(string ticket) {
         Wallet.RedeemedRewards.Add(ticket);
+
         Save();
     }
+
+    #endregion Rewards
+
+    #region Debug
+
+    public void ClearData() {
+        Wallet = new Wallet();
+
+        Save();
+    }
+
+    #endregion Debug
 }

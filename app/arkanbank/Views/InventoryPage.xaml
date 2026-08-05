@@ -4,15 +4,18 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:cells="clr-namespace:arkanbank.Controls.Cells"
-    x:Class="arkanbank.Views.TransactionsPage"
-    Title="Histórico">
+    x:Class="arkanbank.Views.InventoryPage"
+    Title="Inventário">
 
-    <Grid>
+    <Grid RowDefinitions="Auto,*">
 
+        <!-- Inventário -->
         <CollectionView
-            ItemsSource="{Binding Transactions}"
-            IsGrouped="True"
-            VerticalScrollBarVisibility="Never">
+            Grid.Row="1"
+            Margin="20,0"
+            ItemsSource="{Binding Inventory}"
+            VerticalScrollBarVisibility="Never"
+            SelectionMode="None">
 
             <!-- ===================================================== -->
             <!-- Visualização para lista vazio -->
@@ -26,52 +29,36 @@
                     <Label
                         FontFamily="IconsSolid"
                         FontSize="60"
-                        Text="&#xf15c;"
+                        Text="&#xf187;"
                         TextColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray500}}"
                         HorizontalOptions="Center" />
 
                     <Label
                         FontAttributes="Bold"
                         FontSize="22"
-                        HorizontalTextAlignment="Center"
                         TextColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray500}}"
-                        Text="Histórico Vazio" />
+                        HorizontalTextAlignment="Center"
+                        Text="Inventário Vazio" />
 
                     <Label
                         HorizontalTextAlignment="Center"
                         TextColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray500}}"
-                        Text="Tudo que você fizer será registrado aqui." />
+                        Text="Tudo que você comprar aparecerá aqui." />
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
 
-            <!-- ===================================================== -->
-            <!-- Cabeçalho do Grupo -->
-            <!-- ===================================================== -->
-
-            <CollectionView.GroupHeaderTemplate>
-                <DataTemplate>
-                    <Label
-                        Margin="20,20,20,5"
-                        FontAttributes="Bold"
-                        FontSize="18"
-                        Text="{Binding Header}"
-                        TextColor="{AppThemeBinding
-                            Light={StaticResource Black},
-                            Dark={StaticResource White}}" />
-                </DataTemplate>
-            </CollectionView.GroupHeaderTemplate>
-
-            <!-- ===================================================== -->
-            <!-- Itens -->
-            <!-- ===================================================== -->
-
             <CollectionView.ItemTemplate>
+
                 <DataTemplate>
-                    <cells:ExtractCell
-                        Type="{Binding Type}"
-                        Title="{Binding Title}"
-                        Date="{Binding Date}"
-                        Amount="{Binding Amount}" />
+                    <cells:InventoryCell
+                        Id="{Binding Id}"
+                        Emoji="{Binding Emoji}"
+                        Icon="{Binding Icon}"
+                        IconBackground="{Binding IconBackground}"
+                        Category="{Binding Category}"
+                        Name="{Binding Name}"
+                        Description="{Binding Description}"
+                        Clicked="InventoryCell_Clicked" />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

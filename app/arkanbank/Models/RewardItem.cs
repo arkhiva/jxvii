@@ -3,4 +3,5 @@
 public class RewardItem {
     public int Level { get; init; }
     public int Value { get; init; }
+    public TransactionType Type { get; set; }
 }
