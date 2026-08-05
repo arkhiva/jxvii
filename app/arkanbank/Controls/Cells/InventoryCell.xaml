@@ -83,6 +83,8 @@
 
                 <Button
                     Text="Abrir"
+                    FontAttributes="Bold"
+                    TextColor="White"
                     Clicked="Button_Clicked" />
             </VerticalStackLayout>
         </Grid>

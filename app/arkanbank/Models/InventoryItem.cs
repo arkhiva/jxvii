@@ -2,6 +2,7 @@
 
 public class InventoryItem {
     public string Id { get; set; }
+    public string Reference { get; set; }
 
     public string Emoji { get; init; }
     public string Icon { get; init; }
@@ -11,4 +12,6 @@ public class InventoryItem {
 
     public string Name { get; init; }
     public string Description { get; init; }
+
+    public string Value { get; set; }
 }

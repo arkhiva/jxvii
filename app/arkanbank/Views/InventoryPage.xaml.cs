@@ -29,6 +29,13 @@ public partial class InventoryPage : ContentPage {
     }
 
     private async void InventoryCell_Clicked(object sender, string e) {
-        await DisplayAlert("Item clicado", e, "OK");
+        if(string.IsNullOrWhiteSpace(e))
+            return;
+
+        var inventory = InventoryTable.Items[e];
+        if(inventory is null)
+            return;
+
+        await DisplayAlertAsync(inventory.Name, inventory.Value, "OK");
     }
 }

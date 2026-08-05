@@ -345,6 +345,7 @@
                 <Button
                     HeightRequest="55"
                     FontAttributes="Bold"
+                    TextColor="White"
                     Text="Resgatar"
                     Clicked="RedeemButton_Clicked" />
             </VerticalStackLayout>

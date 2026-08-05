@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:editors="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+    xmlns:styles="clr-namespace:arkanbank.Controls.Styles"
+    x:Class="arkanbank.Views.StoreHintPage"
+    Title="Comprar Dica">
+
+    <ContentPage.Resources>
+        <styles:TextEditStyle />
+    </ContentPage.Resources>
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <VerticalStackLayout
+            Padding="20,0">
+
+            <Border
+                Grid.Row="0"
+                Margin="0,0,0,15"
+                Padding="25"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
+                Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray900}}"
+                StrokeShape="RoundRectangle 22">
+
+                <VerticalStackLayout>
+                    <Label
+                        FontSize="15"
+                        Text="Saldo disponível"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
+
+                    <Grid
+                        ColumnDefinitions="*,Auto"
+                        VerticalOptions="Center">
+
+                        <Label
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="40"
+                            VerticalTextAlignment="Center"
+                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span
+                                        Text="N$ "
+                                        FontSize="40" />
+                                    <Span
+                                        x:Name="BalanceLabel"
+                                        FontSize="40" />
+                                    <Span
+                                        x:Name="BalanceCentLabel"
+                                        FontSize="28" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Button
+                            x:Name="VisibilityButton"
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            BackgroundColor="Transparent"
+                            Clicked="OnVisibility_Clicked"
+                            FontFamily="IconsSolid"
+                            FontSize="18"
+                            Text="&#xf06e;"
+                            TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <Label
+                FontSize="13"
+                Text="Informe o código de referência da fase para desbloquear sua dica exclusiva. Esse código está no canto superior direito da fase (#00000)"
+                TextColor="{AppThemeBinding Light={StaticResource Gray500},Dark={StaticResource Gray300}}" />
+
+            <editors:TextEdit
+                x:Name="ReferenceEntry"
+                Margin="0, 20"
+                HasError="False"
+                LabelText="Código da fase   "
+                StartIcon="{FontImageSource FontFamily=IconsSolid, Size=22, Glyph=&#xf12e;}"
+                Keyboard="Numeric"
+                TextFontFamily="monospace"
+                PlaceholderText="Ex.: 00000"
+                Mask="00000"
+                MaskPlaceholderChar="0"
+                MaxCharacterCount="5"
+                ReturnType="Done" />
+
+            <Button
+                x:Name="button"
+                TextColor="White"
+                FontAttributes="Bold"
+                Clicked="BuyButton_Clicked" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

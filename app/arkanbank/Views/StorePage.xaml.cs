@@ -6,6 +6,7 @@ namespace arkanbank.Views;
 
 public partial class StorePage : ContentPage {
     private bool balanceVisible;
+    private bool isRunning = false;
 
     private const string BalanceVisibilityKey = "balance_visibility";
 
@@ -69,14 +70,15 @@ public partial class StorePage : ContentPage {
         if(sender is not Controls.Cells.StoreCell cell)
             return;
 
-        await DisplayAlert("Produto", cell.Id, "OK");
-
-        // Futuramente:
-        //
-        // if(StoreTable.Items.TryGetValue(cell.Id, out var item))
-        // {
-        //     Comprar(item);
-        //     Refresh();
-        // }
+        if(isRunning) { return; }
+        isRunning = true;
+        switch(cell.Id) {
+            case "hint": {
+                // Abri a página de compra de dica!
+                await Shell.Current.GoToAsync(nameof(StoreHintPage));
+                break;
+            }
+        }
+        isRunning = false;
     }
 }
