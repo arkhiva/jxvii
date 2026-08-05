@@ -15,38 +15,42 @@
     <Grid RowDefinitions="Auto,*">
 
         <!-- ===================================================== -->
-        <!-- Popup de Recompensa -->
+        <!-- Popup -->
         <!-- ===================================================== -->
 
         <Grid
-            x:Name="RewardPopup"
+            x:Name="TicketPopup"
             Grid.RowSpan="2"
             IsVisible="False"
             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}"
             ZIndex="100">
 
             <Border
-                WidthRequest="320"
-                Padding="24"
+                WidthRequest="330"
+                Padding="26"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
-                BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray900}}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}"
                 StrokeThickness="0"
                 StrokeShape="RoundRectangle 24">
 
-                <VerticalStackLayout Spacing="18">
+                <VerticalStackLayout
+                    HorizontalOptions="Fill"
+                    Spacing="18">
 
                     <!-- Ícone -->
 
                     <Border
-                        WidthRequest="80"
-                        HeightRequest="80"
+                        x:Name="PopupIconBackground"
+                        WidthRequest="82"
+                        HeightRequest="82"
                         HorizontalOptions="Center"
-                        BackgroundColor="{StaticResource Primary}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
                         StrokeThickness="0"
-                        StrokeShape="RoundRectangle 40">
+                        StrokeShape="RoundRectangle 41">
 
                         <Label
+                            x:Name="PopupIcon"
                             FontFamily="IconsSolid"
                             FontSize="40"
                             HorizontalOptions="Center"
@@ -58,25 +62,38 @@
                     <!-- Título -->
 
                     <Label
-                        HorizontalTextAlignment="Center"
+                        x:Name="PopupTitle"
                         FontAttributes="Bold"
-                        FontSize="24"
+                        FontSize="16"
+                        HorizontalTextAlignment="Center"
                         Text="Recompensa Resgatada!" />
 
                     <!-- Descrição -->
 
                     <Label
-                        x:Name="RewardDescription"
+                        x:Name="PopupDescription"
+                        FontSize="20"
                         HorizontalTextAlignment="Center"
-                        FontSize="15"
-                        Text="Você recebeu N$10." />
+                        Text="Você recebeu sua recompensa." />
+
+                    <!-- Valor -->
+
+                    <Label
+                        x:Name="PopupValue"
+                        FontAttributes="Bold"
+                        FontSize="34"
+                        HorizontalTextAlignment="Center"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                        Text="N$ 10" />
 
                     <!-- Botão -->
 
                     <Button
                         HeightRequest="52"
                         Text="Continuar"
-                        Clicked="RewardPopupButton_Clicked" />
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        Clicked="TicketPopupButton_Clicked" />
                 </VerticalStackLayout>
             </Border>
         </Grid>

@@ -12,46 +12,34 @@ public partial class ScanPage : ContentPage {
 
     public ScanPage() {
         InitializeComponent();
-
         Application.Current.RequestedThemeChanged += Current_RequestedThemeChanged;
-
         UpdateTabs();
     }
 
     protected override void OnAppearing() {
         base.OnAppearing();
-
         CameraView.IsDetecting = qrSelected;
     }
 
     protected override void OnDisappearing() {
         base.OnDisappearing();
-
         CameraView.IsDetecting = false;
     }
 
     protected override bool OnBackButtonPressed() {
-        if(RewardPopup.IsVisible)
-            return true;
-
+        if(TicketPopup.IsVisible) { return true; }
         return base.OnBackButtonPressed();
     }
 
     private void QrTabTapped(object sender, TappedEventArgs e) {
-        if(qrSelected)
-            return;
-
+        if(qrSelected) { return; }
         qrSelected = true;
-
         UpdateTabs();
     }
 
     private void CodeTabTapped(object sender, TappedEventArgs e) {
-        if(!qrSelected)
-            return;
-
+        if(!qrSelected) { return; }
         qrSelected = false;
-
         UpdateTabs();
     }
 
@@ -62,31 +50,16 @@ public partial class ScanPage : ContentPage {
         CameraView.IsDetecting = qrSelected;
 
         if(qrSelected) {
-            QrTab.BackgroundColor =
-                Application.Current.RequestedTheme == AppTheme.Light
-                    ? StaticResourceUtility.Get<Color>("Primary")
-                    : StaticResourceUtility.Get<Color>("PrimaryDark");
-
-            CodeTab.BackgroundColor =
-                Application.Current.RequestedTheme == AppTheme.Light
-                    ? StaticResourceUtility.Get<Color>("Gray100")
-                    : StaticResourceUtility.Get<Color>("Gray600");
+            QrTab.BackgroundColor = Application.Current.RequestedTheme == AppTheme.Light ? StaticResourceUtility.Get<Color>("Primary") : StaticResourceUtility.Get<Color>("PrimaryDark");
+            CodeTab.BackgroundColor = Application.Current.RequestedTheme == AppTheme.Light ? StaticResourceUtility.Get<Color>("Gray100") : StaticResourceUtility.Get<Color>("Gray600");
         } else {
-            CodeTab.BackgroundColor =
-                Application.Current.RequestedTheme == AppTheme.Light
-                    ? StaticResourceUtility.Get<Color>("Primary")
-                    : StaticResourceUtility.Get<Color>("PrimaryDark");
-
-            QrTab.BackgroundColor =
-                Application.Current.RequestedTheme == AppTheme.Light
-                    ? StaticResourceUtility.Get<Color>("Gray100")
-                    : StaticResourceUtility.Get<Color>("Gray600");
+            CodeTab.BackgroundColor = Application.Current.RequestedTheme == AppTheme.Light ? StaticResourceUtility.Get<Color>("Primary") : StaticResourceUtility.Get<Color>("PrimaryDark");
+            QrTab.BackgroundColor = Application.Current.RequestedTheme == AppTheme.Light ? StaticResourceUtility.Get<Color>("Gray100") : StaticResourceUtility.Get<Color>("Gray600");
         }
     }
 
     private void CodeEntry_TextChanged(object sender, EventArgs e) {
-        if(CodeEntry.Text is null)
-            return;
+        if(CodeEntry.Text is null) { return; }
 
         string upper = CodeEntry.Text.ToUpperInvariant();
 
@@ -101,131 +74,131 @@ public partial class ScanPage : ContentPage {
     }
 
     // =========================================================
-    // QR CODE
+    // QR
     // =========================================================
 
     private async void CameraView_BarcodesDetected(object sender, BarcodeDetectionEventArgs e) {
-        if(scanned)
-            return;
+        if(scanned) { return; }
 
         var result = e.Results.FirstOrDefault();
-
-        if(result is null)
-            return;
+        if(result is null) { return; }
 
         scanned = true;
-
         CameraView.IsDetecting = false;
 
         await RedeemQrCode(result.Value);
     }
 
     // =========================================================
-    // PROCESSAMENTO PRINCIPAL
-    // Recebe SEMPRE código criptografado
+    // PROCESSAMENTO
     // =========================================================
 
     private async Task RedeemQrCode(string encryptedValue) {
         try {
-            await ShowToast("🔍 Analisando Código...");
-            await Task.Delay(1000);
+            await ShowToast("🔍 Analisando código...");
+            await Task.Delay(800);
 
-            var qrCode = Cryptography.Decrypt(encryptedValue, true);
-
-            if(qrCode is null) {
-                await ShowToast("🛑 Código Inválido!");
-                await Task.Delay(4000);
+            var ticketValue = Cryptography.Decrypt(encryptedValue);
+            if(string.IsNullOrWhiteSpace(ticketValue)) {
+                await ShowToast("🛑 Código inválido.");
+                await Task.Delay(3000);
                 return;
             }
 
-            switch(qrCode.Type) {
+            if(!TicketTable.Items.TryGetValue(ticketValue, out var ticket)) {
+                await ShowToast("🛑 Ticket inválido.");
+                await Task.Delay(3000);
+                return;
+            }
+
+            switch(ticket.Type) {
                 case TransactionType.Reward: {
-                    if(!RewardTable.Items.TryGetValue(
-                        qrCode.Value,
-                        out var reward)) {
-                        await ShowToast("🛑 Ticket Inválido!");
-                        await Task.Delay(4000);
-                        return;
-                    }
-
-                    if(App.Wallet.IsRewardRedeemed(qrCode.Value)) {
-                        await ShowToast("⚠️ Ticket já resgatado!");
-                        await Task.Delay(4000);
-                        return;
-                    }
-
-                    App.Wallet.AddMoney(
-                        reward.Value,
-                        $"Recompensa Nível {reward.Level}",
-                        TransactionType.Reward);
-
-                    App.Wallet.RegisterReward(
-                        qrCode.Value);
-
-                    await ShowRewardPopup(
-                        reward.Value,
-                        reward.Level);
-
+                    await RedeemReward(ticket);
                     break;
                 }
-
+                case TransactionType.Gift: {
+                    await RedeemGift(ticket);
+                    break;
+                }
                 default: {
-                    // Outros tipos futuramente
-
+                    await ShowToast("⚠️ Tipo de ticket desconhecido.");
                     break;
                 }
             }
         } catch(Exception ex) {
-            await ShowToast(
-                "⚠️ Ocorreu um erro ao processar o QR Code.");
-
+            await ShowToast("⚠️ Erro ao processar QR Code.");
 #if DEBUG
             System.Diagnostics.Debug.WriteLine(ex);
 #endif
         } finally {
-            if(!RewardPopup.IsVisible)
-                ResetScanner();
+            if(!TicketPopup.IsVisible) { ResetScanner(); }
         }
     }
 
     // =========================================================
-    // TICKET DIGITADO
-    // Converte para o mesmo fluxo do QR
+    // REWARD
+    // =========================================================
+
+    private async Task RedeemReward(TicketItem ticket) {
+        if(App.Wallet.IsRewardRedeemed(ticket.Id)) {
+            await ShowToast("⚠️ Ticket já resgatado.");
+            await Task.Delay(3000);
+            return;
+        }
+
+        App.Wallet.AddMoney(ticket.Value, $"Recompensa Nível {ticket.Level}", TransactionType.Reward);
+        App.Wallet.RegisterReward(ticket.Id);
+
+        await ShowTicketPopup(new PopupInfo {
+            Title = "Recompensa Resgatada!",
+            Description = $"Você concluiu o nível {ticket.Level}.",
+            Value = $"N$ {ticket.Value}",
+            Icon = "\uf3d1",
+            Color = Colors.ForestGreen
+        });
+    }
+
+    private async Task RedeemGift(TicketItem ticket) {
+        if(App.Wallet.IsRewardRedeemed(ticket.Id)) {
+            await ShowToast("⚠️ Presente já resgatado.");
+            await Task.Delay(3000);
+            return;
+        }
+
+        App.Wallet.AddMoney(ticket.Value, $"Presente {ticket.Name}", TransactionType.Gift);
+        App.Wallet.RegisterReward(ticket.Id);
+
+        await ShowTicketPopup(new PopupInfo {
+            Title = "Presente Resgatado!",
+            Description = ticket.Name,
+            Value = $"N$ {ticket.Value}",
+            Icon = "\uf06b",
+            Color = Colors.MediumPurple
+        });
+    }
+
+    // =========================================================
+    // TICKET
     // =========================================================
 
     private async void RedeemButton_Clicked(object sender, EventArgs e) {
-        if(scanned)
-            return;
-
+        if(scanned) { return; }
         scanned = true;
 
         try {
             var ticket = CodeEntry.Text?.Trim();
 
-            if(string.IsNullOrWhiteSpace(ticket) ||
-               ticket.Length != 13) {
-                await ShowToast(
-                    "🛑 Informe um ticket válido...");
-
+            if(string.IsNullOrWhiteSpace(ticket) || ticket.Length != 13) {
+                await ShowToast("🛑 Informe um ticket válido.");
                 return;
             }
 
             ticket = ticket.Insert(5, "-").Insert(10, "-");
-
             CodeEntry.Unfocus();
-
-            // O ticket digitado precisa entrar
-            // no mesmo formato do QR Code.
-            var encryptedTicket =
-                Cryptography.Encrypt(
-                    new QrCodeItem {
-                        Type = TransactionType.Reward,
-                        Value = ticket
-                    });
-
+            string encryptedTicket = Cryptography.Encrypt(ticket);
             await RedeemQrCode(encryptedTicket);
         } finally {
-            if(!RewardPopup.IsVisible)
+            if(!TicketPopup.IsVisible)
                 scanned = false;
         }
     }
@@ -235,37 +208,30 @@ public partial class ScanPage : ContentPage {
     // =========================================================
 
     private static Task ShowToast(string message) {
-        return MainThread.InvokeOnMainThreadAsync(() =>
-            Toast.Make(message).Show());
+        return MainThread.InvokeOnMainThreadAsync(() => Toast.Make(message).Show());
     }
 
     private void ResetScanner() {
         scanned = false;
-
-        if(qrSelected)
-            CameraView.IsDetecting = true;
+        if(qrSelected) { CameraView.IsDetecting = true; }
     }
 
-    private async Task ShowRewardPopup(
-        int value,
-        int level) {
+    private async Task ShowTicketPopup(PopupInfo popup) {
         await MainThread.InvokeOnMainThreadAsync(() => {
-            RewardDescription.Text =
-                $"Você recebeu N${value} pela recompensa do nível {level}.";
-
-            RewardPopup.IsVisible = true;
+            PopupTitle.Text = popup.Title;
+            PopupDescription.Text = popup.Description;
+            PopupValue.Text = popup.Value;
+            PopupIcon.Text = popup.Icon;
+            PopupIconBackground.BackgroundColor = popup.Color;
+            PopupValue.TextColor = popup.Color;
+            TicketPopup.IsVisible = true;
         });
     }
 
-    private async void RewardPopupButton_Clicked(
-        object sender,
-        EventArgs e) {
-        RewardPopup.IsVisible = false;
-
+    private async void TicketPopupButton_Clicked(object sender, EventArgs e) {
+        TicketPopup.IsVisible = false;
         CodeEntry.Text = string.Empty;
-
         ResetScanner();
-
         await Shell.Current.GoToAsync("//MainPage");
     }
 }

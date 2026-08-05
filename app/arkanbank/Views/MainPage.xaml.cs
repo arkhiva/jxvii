@@ -1,6 +1,4 @@
-﻿using arkanbank.Security;
-
-namespace arkanbank.Views;
+﻿namespace arkanbank.Views;
 
 public partial class MainPage : ContentPage {
     private bool balanceVisible;
@@ -11,7 +9,7 @@ public partial class MainPage : ContentPage {
     public MainPage() {
         InitializeComponent();
         LoadBalanceVisibility();
-        //var a = Cryptography.Encrypt("kastney");
+        //var a = Cryptography.Encrypt("JXVII-HS87-7R3W");
     }
 
     protected override void OnAppearing() {
