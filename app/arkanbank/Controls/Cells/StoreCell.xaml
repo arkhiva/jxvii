@@ -81,6 +81,8 @@
                 <Label
                     FontSize="11"
                     Text="{Binding Source={x:Reference Root}, Path=Description}"
+                    LineBreakMode="TailTruncation"
+                    MaxLines="2"
                     TextColor="{AppThemeBinding Light=#555,Dark=#AAA}" />
             </VerticalStackLayout>
 

@@ -148,13 +148,13 @@ public partial class InventoryCell : ContentView {
     private void UpdateCategory() {
         category.Text = Category switch {
             InventoryCategory.Hint =>
-                "Dica",
+                "DICA",
 
             InventoryCategory.Experience =>
-                "Experiência",
+                "EXPERIÊNCIA",
 
             InventoryCategory.Feature =>
-                "Funcionalidade",
+                "FUNCIONALIDADE",
 
             _ =>
                 string.Empty

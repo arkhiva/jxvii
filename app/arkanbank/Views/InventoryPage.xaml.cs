@@ -23,7 +23,7 @@ public partial class InventoryPage : ContentPage {
 
         foreach(string id in App.Wallet.Inventory) {
             if(InventoryTable.Items.TryGetValue(id, out InventoryItem? item)) {
-                Inventory.Add(item);
+                Inventory.Insert(0, item);
             }
         }
     }

@@ -130,7 +130,7 @@ public partial class ScanPage : ContentPage {
             await ShowToast("🔍 Analisando Código...");
             await Task.Delay(1000);
 
-            var qrCode = Cryptography.Decrypt(encryptedValue);
+            var qrCode = Cryptography.Decrypt(encryptedValue, true);
 
             if(qrCode is null) {
                 await ShowToast("🛑 Código Inválido!");

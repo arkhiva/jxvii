@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+    x:Class="arkanbank.Views.StoreExperiencePage"
+    Title="Comprar Experiência">
+
+    <Grid>
+
+        <!-- ================================================= -->
+        <!-- Popup Scanner -->
+        <!-- ================================================= -->
+
+        <Grid
+            x:Name="ScannerPopup"
+            IsVisible="False"
+            BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}"
+            ZIndex="100">
+
+            <VerticalStackLayout
+                Padding="20"
+                Spacing="20"
+                VerticalOptions="Center">
+
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="24"
+                    HorizontalTextAlignment="Center"
+                    Text="Autorização necessária" />
+
+                <Label
+                    FontSize="14"
+                    HorizontalTextAlignment="Center"
+                    Text="Peça ao administrador para apresentar o QR Code de autorização e concluir o resgate desta experiência." />
+
+                <Border
+                    HeightRequest="340"
+                    Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray900}}"
+                    StrokeShape="RoundRectangle 20">
+
+                    <Grid>
+
+                        <!-- Camera -->
+
+                        <zxing:CameraBarcodeReaderView
+                            x:Name="CameraView"
+                            IsDetecting="False"
+                            BarcodesDetected="CameraView_BarcodesDetected" />
+
+                        <!-- Overlay -->
+
+                        <Grid InputTransparent="True">
+
+                            <Border
+                                BackgroundColor="#15000000"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 20" />
+
+                            <!-- Linha -->
+
+                            <Border
+                                HeightRequest="2"
+                                Margin="35,0"
+                                VerticalOptions="Center"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                                StrokeThickness="0"
+                                Opacity="0.95">
+
+                                <Border.Shadow>
+                                    <Shadow
+                                        Brush="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                                        Radius="18"
+                                        Opacity="0.9" />
+                                </Border.Shadow>
+                            </Border>
+
+                            <!-- Superior esquerdo -->
+
+                            <Grid
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Start"
+                                Margin="24">
+
+                                <BoxView
+                                    WidthRequest="34"
+                                    HeightRequest="5"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="Start"
+                                    Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+
+                                <BoxView
+                                    WidthRequest="5"
+                                    HeightRequest="34"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="Start"
+                                    Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                            </Grid>
+
+                            <!-- Superior direito -->
+
+                            <Grid
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                HorizontalOptions="End"
+                                VerticalOptions="Start"
+                                Margin="24">
+
+                                <BoxView
+                                    WidthRequest="34"
+                                    HeightRequest="5"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Start"
+                                    Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+
+                                <BoxView
+                                    WidthRequest="5"
+                                    HeightRequest="34"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Start"
+                                    Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                            </Grid>
+
+                            <!-- Inferior esquerdo -->
+
+                            <Grid
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                HorizontalOptions="Start"
+                                VerticalOptions="End"
+                                Margin="24">
+
+                                <BoxView
+                                    WidthRequest="34"
+                                    HeightRequest="5"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="End"
+                                    Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+
+                                <BoxView
+                                    WidthRequest="5"
+                                    HeightRequest="34"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="End"
+                                    Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                            </Grid>
+
+                            <!-- Inferior direito -->
+
+                            <Grid
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                HorizontalOptions="End"
+                                VerticalOptions="End"
+                                Margin="24">
+
+                                <BoxView
+                                    WidthRequest="34"
+                                    HeightRequest="5"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="End"
+                                    Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+
+                                <BoxView
+                                    WidthRequest="5"
+                                    HeightRequest="34"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="End"
+                                    Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Button
+                    Text="Cancelar"
+                    FontAttributes="Bold"
+                    TextColor="White"
+                    Clicked="CancelScanner_Clicked" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- ================================================= -->
+        <!-- Conteúdo -->
+        <!-- ================================================= -->
+
+        <ScrollView VerticalScrollBarVisibility="Never">
+
+            <VerticalStackLayout
+                Padding="20,0"
+                Spacing="20">
+
+                <!-- Saldo -->
+
+                <Border
+                    Padding="25"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
+                    Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray900}}"
+                    StrokeShape="RoundRectangle 22">
+
+                    <VerticalStackLayout>
+
+                        <Label
+                            FontSize="15"
+                            Text="Saldo disponível"
+                            TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
+
+                        <Grid ColumnDefinitions="*,Auto">
+
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="40">
+
+                                <Label.FormattedText>
+
+                                    <FormattedString>
+
+                                        <Span
+                                            Text="N$ "
+                                            FontSize="40" />
+
+                                        <Span
+                                            x:Name="BalanceLabel"
+                                            FontSize="40" />
+
+                                        <Span
+                                            x:Name="BalanceCentLabel"
+                                            FontSize="28" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Button
+                                x:Name="VisibilityButton"
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                BackgroundColor="Transparent"
+                                FontFamily="IconsSolid"
+                                FontSize="18"
+                                Text="&#xf06e;"
+                                Clicked="OnVisibility_Clicked"
+                                TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Produto -->
+
+                <Border
+                    Padding="25"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 22">
+
+                    <VerticalStackLayout
+                        HorizontalOptions="Center"
+                        Spacing="16">
+
+                        <Border
+                            x:Name="IconBackgroundBorder"
+                            WidthRequest="90"
+                            HeightRequest="90"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 24">
+
+                            <Grid>
+
+                                <Label
+                                    x:Name="EmojiLabel"
+                                    FontSize="46"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+
+                        <Label
+                            x:Name="NameLabel"
+                            FontSize="24"
+                            FontAttributes="Bold"
+                            HorizontalTextAlignment="Center" />
+
+                        <Border
+                            Padding="10,4"
+                            BackgroundColor="#F59E0B"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 10"
+                            HorizontalOptions="Center">
+
+                            <Label
+                                Text="EXPERIÊNCIA"
+                                FontSize="10"
+                                FontAttributes="Bold"
+                                TextColor="White" />
+                        </Border>
+
+                        <Label
+                            x:Name="DescriptionLabel"
+                            FontSize="14"
+                            HorizontalTextAlignment="Center"
+                            TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Button
+                    x:Name="BuyButton"
+                    FontAttributes="Bold"
+                    TextColor="White"
+                    Clicked="BuyButton_Clicked" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

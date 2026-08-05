@@ -15,15 +15,27 @@ public static class Cryptography {
 
     #region Public Methods
 
+    [Obsolete("Use Decrypt(string qrCodeSecret) instead.")]
     public static string Encrypt(QrCodeItem qrCodeItem) {
         var value = JsonConvert.SerializeObject(qrCodeItem);
         return Encrypt(value, QR_CODE_SECRET);
     }
 
-    public static QrCodeItem Decrypt(string qrCodeSecret) {
+    public static string Encrypt(string code) {
+        return Encrypt(code, QR_CODE_SECRET);
+    }
+
+    [Obsolete("Use Decrypt(string qrCodeSecret) instead.")]
+    public static QrCodeItem Decrypt(string qrCodeSecret, bool a = false) {
         var decrypt = Decrypt(qrCodeSecret, QR_CODE_SECRET);
         if(string.IsNullOrWhiteSpace(decrypt)) { return null; }
         return JsonConvert.DeserializeObject<QrCodeItem>(decrypt);
+    }
+
+    public static string Decrypt(string qrCodeSecret) {
+        var decrypt = Decrypt(qrCodeSecret, QR_CODE_SECRET);
+        if(string.IsNullOrWhiteSpace(decrypt)) { return null; }
+        return decrypt;
     }
 
     #endregion Public Methods

@@ -49,5 +49,11 @@ public static class InventoryTable {
             ["JXVII-IVTY-0041"] = new() { Id = "JXVII-IVTY-0041", Reference = "64195", Name = "Dica do Nível 41", Description = "Uma dica para o nível 41", Category = InventoryCategory.Hint, Icon = "\uf0eb", IconBackground = "#E8FAFF", Value = "" },
             ["JXVII-IVTY-0042"] = new() { Id = "JXVII-IVTY-0042", Reference = "82713", Name = "Dica do Nível 42", Description = "Uma dica para o nível 42", Category = InventoryCategory.Hint, Icon = "\uf0eb", IconBackground = "#E8FAFF", Value = "" },
             ["JXVII-IVTY-0043"] = new() { Id = "JXVII-IVTY-0043", Reference = "39264", Name = "Dica do Nível 43", Description = "Uma dica para o nível 43", Category = InventoryCategory.Hint, Icon = "\uf0eb", IconBackground = "#E8FAFF", Value = "" },
+
+            ["spinner"] = new() { Id = "spinner", Name = "Finger Spinner", Description = "Desbloqueia um minigame permanente.", Category = InventoryCategory.Feature, Icon = "\uf863", IconBackground = "#EEF8FF" },
+
+            ["bombom"] = new() { Id = "bombom", Name = "Caixa de Bombom", Description = " Caixa de bombons recebida.", Category = InventoryCategory.Experience, Emoji = "🍫", IconBackground = "#FFF2F4" },
+            ["pizza"] = new() { Id = "pizza", Name = "Pizza", Description = "Pizza recebida.", Category = InventoryCategory.Experience, Emoji = "🍕", IconBackground = "#FFF5E5" },
+            ["trip"] = new() { Id = "trip", Name = "Passeio", Description = "Um passeio realizado.", Category = InventoryCategory.Experience, Emoji = "🎡", IconBackground = "#EEF8FF" }
         };
 }

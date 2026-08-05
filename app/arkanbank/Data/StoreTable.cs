@@ -15,7 +15,7 @@ public static class StoreTable {
                 Name = "Comprar Dica",
                 Description = "Utilize um código para desbloquear uma dica exclusiva.",
                 Category = StoreCategory.Hint,
-                Price = 5,
+                Price = 1,
                 Icon = "\uf0eb",
                 IconBackground = "#E8FAFF"
             },
@@ -29,7 +29,7 @@ public static class StoreTable {
                 Name = "Caixa de Bombom",
                 Description = "Receba uma caixa de bombom.",
                 Category = StoreCategory.Experience,
-                Price = 40,
+                Price = 1,
                 Emoji = "🍫",
                 IconBackground = "#FFF2F4"
             },
@@ -39,7 +39,7 @@ public static class StoreTable {
                 Name = "Pizza",
                 Description = "Troque seus Nexos por uma pizza.",
                 Category = StoreCategory.Experience,
-                Price = 120,
+                Price = 1,
                 Emoji = "🍕",
                 IconBackground = "#FFF5E5"
             },
@@ -49,7 +49,7 @@ public static class StoreTable {
                 Name = "Passeio",
                 Description = "Uma experiência especial.",
                 Category = StoreCategory.Experience,
-                Price = 300,
+                Price = 1,
                 Emoji = "🎡",
                 IconBackground = "#EEF8FF"
             },
@@ -63,7 +63,7 @@ public static class StoreTable {
                 Name = "Finger Spinner",
                 Description = "Desbloqueia um minigame permanente.",
                 Category = StoreCategory.Feature,
-                Price = 80,
+                Price = 1,
                 Icon = "\uf863",
                 IconBackground = "#EEF8FF"
             }

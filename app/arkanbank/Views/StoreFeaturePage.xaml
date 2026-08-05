@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="arkanbank.Views.StoreFeaturePage"
+    Title="Comprar Funcionalidade">
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+
+        <VerticalStackLayout
+            Padding="20,0"
+            Spacing="20">
+
+            <!-- ================================================= -->
+            <!-- Saldo -->
+            <!-- ================================================= -->
+
+            <Border
+                Padding="25"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
+                Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray900}}"
+                StrokeShape="RoundRectangle 22">
+
+                <VerticalStackLayout>
+
+                    <Label
+                        FontSize="15"
+                        Text="Saldo disponível"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
+
+                    <Grid
+                        ColumnDefinitions="*,Auto">
+
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="40"
+                            VerticalTextAlignment="Center">
+
+                            <Label.FormattedText>
+                                <FormattedString>
+
+                                    <Span
+                                        Text="N$ "
+                                        FontSize="40" />
+
+                                    <Span
+                                        x:Name="BalanceLabel"
+                                        FontSize="40" />
+
+                                    <Span
+                                        x:Name="BalanceCentLabel"
+                                        FontSize="28" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Button
+                            x:Name="VisibilityButton"
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            BackgroundColor="Transparent"
+                            FontFamily="IconsSolid"
+                            FontSize="18"
+                            Text="&#xf06e;"
+                            Clicked="OnVisibility_Clicked"
+                            TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ================================================= -->
+            <!-- Produto -->
+            <!-- ================================================= -->
+
+            <Border
+                Padding="25"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 22">
+
+                <VerticalStackLayout
+                    HorizontalOptions="Center"
+                    Spacing="16">
+
+                    <!-- Ícone -->
+
+                    <Border
+                        x:Name="IconBackgroundBorder"
+                        WidthRequest="90"
+                        HeightRequest="90"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 24">
+
+                        <Grid>
+
+                            <Label
+                                x:Name="EmojiLabel"
+                                FontSize="46"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+
+                            <Label
+                                x:Name="IconLabel"
+                                FontFamily="IconsSolid"
+                                FontSize="42"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                        </Grid>
+                    </Border>
+
+                    <!-- Nome -->
+
+                    <Label
+                        x:Name="NameLabel"
+                        FontSize="24"
+                        FontAttributes="Bold"
+                        HorizontalTextAlignment="Center" />
+
+                    <!-- Categoria -->
+
+                    <Border
+                        Padding="10,4"
+                        BackgroundColor="#7B61FF"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 10"
+                        HorizontalOptions="Center">
+
+                        <Label
+                            Text="FUNCIONALIDADE"
+                            FontAttributes="Bold"
+                            FontSize="10"
+                            TextColor="White" />
+                    </Border>
+
+                    <!-- Descrição -->
+
+                    <Label
+                        x:Name="DescriptionLabel"
+                        FontSize="14"
+                        HorizontalTextAlignment="Center"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Botão -->
+
+            <Button
+                x:Name="BuyButton"
+                FontAttributes="Bold"
+                TextColor="White"
+                Clicked="BuyButton_Clicked" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

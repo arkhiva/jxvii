@@ -147,6 +147,12 @@
 	  <MauiXaml Update="Views\ScanPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\StoreExperiencePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\StoreFeaturePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\StoreHintPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

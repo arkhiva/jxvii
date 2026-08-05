@@ -148,11 +148,11 @@ public partial class StoreCell : ContentView {
 
     private void UpdateCategory() {
         category.Text = Category switch {
-            StoreCategory.Hint => "Dica",
+            StoreCategory.Hint => "DICA",
 
-            StoreCategory.Experience => "Experiência",
+            StoreCategory.Experience => "EXPERIÊNCIA",
 
-            StoreCategory.Feature => "Funcionalidade",
+            StoreCategory.Feature => "FUNCIONALIDADE",
 
             _ => string.Empty
         };
