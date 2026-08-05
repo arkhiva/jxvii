@@ -1,6 +1,6 @@
-﻿using System.Text.Json;
-using arkanbank.Data;
+﻿using arkanbank.Data;
 using arkanbank.Models;
+using System.Text.Json;
 
 namespace arkanbank.Services;
 

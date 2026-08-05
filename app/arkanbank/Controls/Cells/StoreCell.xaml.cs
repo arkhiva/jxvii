@@ -2,15 +2,20 @@ using arkanbank.Models;
 
 namespace arkanbank.Controls.Cells;
 
-public partial class InventoryCell : ContentView {
+public partial class StoreCell : ContentView {
 
-    public event EventHandler<string>? Clicked;
+    public static readonly BindableProperty IdProperty =
+        BindableProperty.Create(
+            nameof(Id),
+            typeof(string),
+            typeof(StoreCell),
+            string.Empty);
 
     public static readonly BindableProperty NameProperty =
         BindableProperty.Create(
             nameof(Name),
             typeof(string),
-            typeof(InventoryCell),
+            typeof(StoreCell),
             string.Empty,
             propertyChanged: OnPropertyChanged);
 
@@ -18,23 +23,23 @@ public partial class InventoryCell : ContentView {
         BindableProperty.Create(
             nameof(Description),
             typeof(string),
-            typeof(InventoryCell),
+            typeof(StoreCell),
             string.Empty,
             propertyChanged: OnPropertyChanged);
 
     public static readonly BindableProperty CategoryProperty =
         BindableProperty.Create(
             nameof(Category),
-            typeof(InventoryCategory),
-            typeof(InventoryCell),
-            InventoryCategory.Hint,
+            typeof(StoreCategory),
+            typeof(StoreCell),
+            StoreCategory.Hint,
             propertyChanged: OnPropertyChanged);
 
     public static readonly BindableProperty EmojiProperty =
         BindableProperty.Create(
             nameof(Emoji),
             typeof(string),
-            typeof(InventoryCell),
+            typeof(StoreCell),
             string.Empty,
             propertyChanged: OnPropertyChanged);
 
@@ -42,7 +47,7 @@ public partial class InventoryCell : ContentView {
         BindableProperty.Create(
             nameof(Icon),
             typeof(string),
-            typeof(InventoryCell),
+            typeof(StoreCell),
             string.Empty,
             propertyChanged: OnPropertyChanged);
 
@@ -50,16 +55,22 @@ public partial class InventoryCell : ContentView {
         BindableProperty.Create(
             nameof(IconBackground),
             typeof(Color),
-            typeof(InventoryCell),
+            typeof(StoreCell),
             Colors.Transparent,
             propertyChanged: OnPropertyChanged);
 
-    public static readonly BindableProperty IdProperty =
+    public static readonly BindableProperty PriceProperty =
         BindableProperty.Create(
-            nameof(Id),
-            typeof(string),
-            typeof(InventoryCell),
-            string.Empty);
+            nameof(Price),
+            typeof(int),
+            typeof(StoreCell),
+            0,
+            propertyChanged: OnPropertyChanged);
+
+    public string Id {
+        get => (string)GetValue(IdProperty);
+        set => SetValue(IdProperty, value);
+    }
 
     public string Name {
         get => (string)GetValue(NameProperty);
@@ -71,8 +82,8 @@ public partial class InventoryCell : ContentView {
         set => SetValue(DescriptionProperty, value);
     }
 
-    public InventoryCategory Category {
-        get => (InventoryCategory)GetValue(CategoryProperty);
+    public StoreCategory Category {
+        get => (StoreCategory)GetValue(CategoryProperty);
         set => SetValue(CategoryProperty, value);
     }
 
@@ -91,12 +102,14 @@ public partial class InventoryCell : ContentView {
         set => SetValue(IconBackgroundProperty, value);
     }
 
-    public string Id {
-        get => (string)GetValue(IdProperty);
-        set => SetValue(IdProperty, value);
+    public int Price {
+        get => (int)GetValue(PriceProperty);
+        set => SetValue(PriceProperty, value);
     }
 
-    public InventoryCell() {
+    public event EventHandler? Clicked;
+
+    public StoreCell() {
         InitializeComponent();
     }
 
@@ -104,74 +117,62 @@ public partial class InventoryCell : ContentView {
         BindableObject bindable,
         object oldValue,
         object newValue) {
-        if(bindable is InventoryCell control)
+        if(bindable is StoreCell control)
             control.Refresh();
     }
 
     private void Refresh() {
         UpdateIcon();
-
         UpdateCategory();
-
-        UpdateAction();
-    }
-
-    private void UpdateAction() {
-        actionContainer.IsVisible =
-            Category == InventoryCategory.Hint &&
-            Clicked != null;
-    }
-
-    private void Button_Clicked(object sender, EventArgs e) {
-        Clicked?.Invoke(this, Id);
+        UpdatePrice();
     }
 
     private void UpdateIcon() {
-        if(!string.IsNullOrEmpty(Icon)) {
+        if(!string.IsNullOrWhiteSpace(Icon)) {
             icon.Text = Icon;
             icon.IsVisible = true;
 
             emoji.Text = string.Empty;
             emoji.IsVisible = false;
-        } else if(!string.IsNullOrEmpty(Emoji)) {
+        } else if(!string.IsNullOrWhiteSpace(Emoji)) {
             emoji.Text = Emoji;
             emoji.IsVisible = true;
 
             icon.Text = string.Empty;
             icon.IsVisible = false;
         } else {
-            emoji.IsVisible = false;
             icon.IsVisible = false;
+            emoji.IsVisible = false;
         }
     }
 
     private void UpdateCategory() {
         category.Text = Category switch {
-            InventoryCategory.Hint =>
-                "Dica",
+            StoreCategory.Hint => "Dica",
 
-            InventoryCategory.Experience =>
-                "Experiência",
+            StoreCategory.Experience => "Experiência",
 
-            InventoryCategory.Feature =>
-                "Funcionalidade",
+            StoreCategory.Feature => "Funcionalidade",
 
-            _ =>
-                string.Empty
+            _ => string.Empty
         };
 
         categoryBorder.BackgroundColor = Category switch {
-            InventoryCategory.Hint =>
-                Color.FromArgb("#009CB8"),
+            StoreCategory.Hint => Color.FromArgb("#009CB8"),
 
-            InventoryCategory.Experience =>
-                Color.FromArgb("#C96D00"),
+            StoreCategory.Experience => Color.FromArgb("#C96D00"),
 
-            InventoryCategory.Feature =>
-                Color.FromArgb("#7B61FF"),
+            StoreCategory.Feature => Color.FromArgb("#7B61FF"),
 
-            _ =>
-                Color.FromArgb("#999999")
+            _ => Color.FromArgb("#999999")
         };
+    }
+
+    private void UpdatePrice() {
+        price.Text = $"N$ {Price:N0}";
+    }
+
+    private void Button_Clicked(object sender, EventArgs e) {
+        Clicked?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentView
+    x:Name="Root"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="arkanbank.Controls.Cells.StoreCell">
+
+    <Border
+        Margin="0,0,0,18"
+        Padding="18"
+        StrokeThickness="0"
+        BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
+        StrokeShape="RoundRectangle 18">
+
+        <Grid ColumnDefinitions="60,*,Auto">
+
+            <!-- Ícone -->
+
+            <Border
+                WidthRequest="60"
+                HeightRequest="60"
+                BackgroundColor="{Binding Source={x:Reference Root}, Path=IconBackground}"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 16">
+
+                <Grid>
+
+                    <!-- Emoji -->
+
+                    <Label
+                        x:Name="emoji"
+                        FontSize="32"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+
+                    <!-- Ícone -->
+
+                    <Label
+                        x:Name="icon"
+                        FontFamily="IconsSolid"
+                        FontSize="28"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                </Grid>
+            </Border>
+
+            <!-- Conteúdo -->
+
+            <VerticalStackLayout
+                Grid.Column="1"
+                Margin="10,0"
+                VerticalOptions="Center">
+
+                <!-- Categoria -->
+
+                <Border
+                    x:Name="categoryBorder"
+                    Padding="8,3"
+                    HorizontalOptions="Start"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 10">
+
+                    <Label
+                        x:Name="category"
+                        FontSize="8"
+                        FontAttributes="Bold"
+                        TextColor="White" />
+                </Border>
+
+                <!-- Nome -->
+
+                <Label
+                    FontSize="17"
+                    FontAttributes="Bold"
+                    Text="{Binding Source={x:Reference Root}, Path=Name}" />
+
+                <!-- Descrição -->
+
+                <Label
+                    FontSize="11"
+                    Text="{Binding Source={x:Reference Root}, Path=Description}"
+                    TextColor="{AppThemeBinding Light=#555,Dark=#AAA}" />
+            </VerticalStackLayout>
+
+            <!-- Ações -->
+
+            <VerticalStackLayout
+                Grid.Column="2"
+                VerticalOptions="Center"
+                HorizontalOptions="Center">
+
+                <!-- Preço -->
+
+                <HorizontalStackLayout
+                    HorizontalOptions="Center"
+                    Spacing="2">
+
+                    <Label
+                        FontFamily="IconsSolid"
+                        FontSize="16"
+                        Text="&#xf3d1;"
+                        VerticalTextAlignment="Center"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+
+                    <Label
+                        x:Name="price"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        VerticalTextAlignment="Center"
+                        TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                </HorizontalStackLayout>
+
+                <!-- Botão -->
+
+                <Button
+                    x:Name="button"
+                    Text="Comprar"
+                    FontAttributes="Bold"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                    TextColor="White"
+                    Clicked="Button_Clicked" />
+            </VerticalStackLayout>
+        </Grid>
+    </Border>
+</ContentView>

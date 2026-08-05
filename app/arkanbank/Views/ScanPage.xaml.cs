@@ -2,7 +2,6 @@ using arkanbank.Data;
 using arkanbank.Models;
 using arkanbank.Security;
 using CommunityToolkit.Maui.Alerts;
-using System.Transactions;
 using ZXing.Net.Maui;
 
 namespace arkanbank.Views;

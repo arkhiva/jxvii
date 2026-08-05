@@ -9,62 +9,20 @@ public partial class StorePage : ContentPage {
 
     private const string BalanceVisibilityKey = "balance_visibility";
 
-    public ObservableCollection<StoreItem> Products { get; } = new();
+    public ObservableCollection<StoreItem> Products { get; } = [];
 
     public StorePage() {
         InitializeComponent();
 
         BindingContext = this;
-
-        foreach(var item in StoreTable.Items) {
-            item.BuyCommand = new Command(async () => await Buy(item));
-
-            Products.Add(item);
-        }
     }
 
     protected override void OnAppearing() {
         base.OnAppearing();
 
-        balanceVisible = Preferences.Get(BalanceVisibilityKey, true);
-
-        UpdateBalanceDisplay();
-    }
-
-    private async Task Buy(StoreItem item) {
-        if(App.Wallet.Wallet.Balance < item.Price) {
-            await DisplayAlert(
-                "Saldo insuficiente",
-                "Você não possui Nexos suficientes.",
-                "OK");
-
-            return;
-        }
-
-        if(item.RequireApproval) {
-            await DisplayAlert(
-                "Aprovação",
-                "Essa compra requer aprovação por QR Code.",
-                "Continuar");
-
-            // TODO:
-            // abrir tela de aprovação.
-            return;
-        }
-
-        App.Wallet.RemoveMoney(
-            item.Price,
-            $"Compra: {item.Name}",
-            TransactionType.Purchase);
-
-        //App.Wallet.AddInventoryItem(new InventoryItem {Name = "Dica Nível 3", Description = "", });
-
-        item.Quantity--;
-
-        if(item.Category == StoreCategory.Feature)
-            item.Purchased = true;
-
-        BalanceLabel.Text = App.Wallet.Wallet.Balance.ToString();
+        balanceVisible = Preferences.Get(
+            BalanceVisibilityKey,
+            true);
 
         Refresh();
     }
@@ -72,21 +30,21 @@ public partial class StorePage : ContentPage {
     private void Refresh() {
         Products.Clear();
 
-        foreach(var item in StoreTable.Items) {
-            if(item.Category == StoreCategory.Feature && item.Purchased)
-                continue;
-
-            if(item.Quantity == 0)
-                continue;
-
+        foreach(StoreItem item in StoreTable.Items.Values) {
             Products.Add(item);
         }
+
+        UpdateBalanceDisplay();
     }
 
-    private void OnVisibility_Clicked(object sender, EventArgs e) {
+    private void OnVisibility_Clicked(
+        object sender,
+        EventArgs e) {
         balanceVisible = !balanceVisible;
 
-        Preferences.Set(BalanceVisibilityKey, balanceVisible);
+        Preferences.Set(
+            BalanceVisibilityKey,
+            balanceVisible);
 
         UpdateBalanceDisplay();
     }
@@ -99,8 +57,26 @@ public partial class StorePage : ContentPage {
             return;
         }
 
-        BalanceLabel.Text = $"{App.Wallet.Wallet.Balance}";
+        BalanceLabel.Text =
+            App.Wallet.Wallet.Balance.ToString("N0");
+
         BalanceCentLabel.Text = ",00";
+
         VisibilityButton.Text = "\uf06e";
+    }
+
+    private async void StoreCell_Clicked(object sender, EventArgs e) {
+        if(sender is not Controls.Cells.StoreCell cell)
+            return;
+
+        await DisplayAlert("Produto", cell.Id, "OK");
+
+        // Futuramente:
+        //
+        // if(StoreTable.Items.TryGetValue(cell.Id, out var item))
+        // {
+        //     Comprar(item);
+        //     Refresh();
+        // }
     }
 }

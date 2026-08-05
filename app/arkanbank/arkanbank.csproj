@@ -135,6 +135,9 @@
 	  <MauiXaml Update="Controls\Cells\InventoryCell.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Controls\Cells\StoreCell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Controls\Styles\TextEditStyle.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
