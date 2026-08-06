@@ -153,8 +153,8 @@ public partial class ScanPage : ContentPage {
             Title = "Recompensa Resgatada!",
             Description = $"Você concluiu o nível {ticket.Level}.",
             Value = $"N$ {ticket.Value}",
-            Icon = "\uf3d1",
-            Color = Colors.ForestGreen
+            Icon = "\uf5a2",
+            Color = Colors.MediumPurple
         });
     }
 
@@ -165,7 +165,7 @@ public partial class ScanPage : ContentPage {
             return;
         }
 
-        App.Wallet.AddMoney(ticket.Value, $"Presente {ticket.Name}", TransactionType.Gift);
+        App.Wallet.AddMoney(ticket.Value, ticket.Name, TransactionType.Gift);
         App.Wallet.RegisterReward(ticket.Id);
 
         await ShowTicketPopup(new PopupInfo {
@@ -173,7 +173,7 @@ public partial class ScanPage : ContentPage {
             Description = ticket.Name,
             Value = $"N$ {ticket.Value}",
             Icon = "\uf06b",
-            Color = Colors.MediumPurple
+            Color = Colors.Gold
         });
     }
 

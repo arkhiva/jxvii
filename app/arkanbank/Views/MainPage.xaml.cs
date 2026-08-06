@@ -9,7 +9,7 @@ public partial class MainPage : ContentPage {
     public MainPage() {
         InitializeComponent();
         LoadBalanceVisibility();
-        //var a = Cryptography.Encrypt("JXVII-HS87-7R3W");
+        //var a = Security.Cryptography.Encrypt("JXVII-4T6P-81XN");
     }
 
     protected override void OnAppearing() {
