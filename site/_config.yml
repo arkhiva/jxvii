@@ -7,6 +7,8 @@ site_title: "Desafio JXVII"
 collections:
   levels:
     output: true
+  videos:
+    output: true
 
 # Styles settings
 sass:
