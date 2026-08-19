@@ -258,6 +258,56 @@
             </Grid>
 
             <!-- ===================================================== -->
+            <!-- Funcionalidades -->
+            <!-- ===================================================== -->
+
+            <Label
+                x:Name="FunctionalitiesTitle"
+                Margin="0,25,0,10"
+                Text="Funcionalidades" />
+
+            <Grid
+                x:Name="FunctionalitiesGrid"
+                ColumnDefinitions="*,*"
+                RowDefinitions="Auto,Auto"
+                ColumnSpacing="15"
+                RowSpacing="15">
+
+                <!-- Fidget Spinner -->
+
+                <Border
+                    x:Name="FidgetSpinnerButton"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Padding="20"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
+                    Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray900}}"
+                    StrokeShape="RoundRectangle 20">
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="FidgetSpinnerTapped" />
+                    </Border.GestureRecognizers>
+
+                    <VerticalStackLayout
+                        HorizontalOptions="Center"
+                        Spacing="10">
+
+                        <Label
+                            FontFamily="IconsSolid"
+                            FontSize="28"
+                            HorizontalTextAlignment="Center"
+                            Text="&#xf863;" />
+
+                        <Label
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text="Fidget Spinner" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+
+            <!-- ===================================================== -->
             <!-- Rodapé -->
             <!-- ===================================================== -->
 

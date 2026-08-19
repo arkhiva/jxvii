@@ -78,16 +78,14 @@ public partial class StorePage : ContentPage {
                 await Shell.Current.GoToAsync(nameof(StoreHintPage));
                 break;
             }
-            case "bombom":
-            case "pizza":
-            case "trip": {
-                // Abri a página de compra de uma experiência!
-                await Shell.Current.GoToAsync($"{nameof(StoreExperiencePage)}?ExperienceId={cell.Id}");
-                break;
-            }
             case "spinner": {
                 // Abri a página de compra de uma funcionalidade!
                 await Shell.Current.GoToAsync($"{nameof(StoreFeaturePage)}?FeatureId={cell.Id}");
+                break;
+            }
+            default: {
+                // Abri a página de compra de uma experiência!
+                await Shell.Current.GoToAsync($"{nameof(StoreExperiencePage)}?ExperienceId={cell.Id}");
                 break;
             }
         }

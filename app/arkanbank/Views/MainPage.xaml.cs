@@ -14,9 +14,7 @@ public partial class MainPage : ContentPage {
 
     protected override void OnAppearing() {
         base.OnAppearing();
-
         balanceVisible = Preferences.Get(BalanceVisibilityKey, true);
-
         UpdateBalanceDisplay();
     }
 
@@ -42,7 +40,11 @@ public partial class MainPage : ContentPage {
         BalanceLabel.Text = $"{App.Wallet.Wallet.Balance}";
         BalanceCentLabel.Text = ",00";
         VisibilityButton.Text = "\uf06e";
+
+        UpdateFunctionalities();
     }
+
+    #region Buttons
 
     private async void ScanTapped(object sender, TappedEventArgs e) {
         if(isRunning) { return; }
@@ -70,5 +72,23 @@ public partial class MainPage : ContentPage {
         isRunning = true;
         await Shell.Current.GoToAsync(nameof(InventoryPage));
         isRunning = false;
+    }
+
+    private async void FidgetSpinnerTapped(object sender, TappedEventArgs e) {
+        if(isRunning) { return; }
+        isRunning = true;
+        await Shell.Current.GoToAsync(nameof(FidgetSpinnerPage));
+        isRunning = false;
+    }
+
+    #endregion Buttons
+
+    private void UpdateFunctionalities() {
+        bool hasFidgetSpinner = App.Wallet.Wallet.Inventory.Any(item => item.Equals("spinner"));
+        FidgetSpinnerButton.IsVisible = hasFidgetSpinner;
+
+        bool hasAnyFunctionality = hasFidgetSpinner;
+        FunctionalitiesTitle.IsVisible = hasAnyFunctionality;
+        FunctionalitiesGrid.IsVisible = hasAnyFunctionality;
     }
 }
